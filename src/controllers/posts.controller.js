@@ -1,38 +1,56 @@
 // src/controllers/posts.controller.js
 
-// This function will be our handler for "GET /api/v1/posts"
+// ==============================
+// Controller: Get All Posts
+// Handles: GET /api/v1/posts
+// ==============================
 const getAllPosts = (req, res) => {
-  // For now, the "business logic" is simple.
-  // In the future, this is where we would call a service to get data from a database.
+  // In real projects, this data would usually come from a database.
+  // For now, we are using dummy/static data.
   const posts = [
     { id: 1, title: 'Controller Post 1' },
     { id: 2, title: 'Controller Post 2' }
   ];
 
-  // The controller's job is to send the final response.
+  // Send a professional API response
+  // 200 = Success
+  // success: true tells frontend the request worked
+  // data: {} wraps the actual response
   res.status(200).json({
-    message: 'Posts fetched successfully',
-    data: posts
-  });
-};
-
-const getSingleUser = (req, res) => {
-  // Express puts all URL parameters into the `req.params` object.
-  // The property name matches the parameter name from our route definition.
-  const requestedUserId = req.params.userId;
-
-  // Now we have the ID! We can use it to fetch the user from a database.
-  // For now, let's just send it back to confirm we got it.
-  res.status(200).json({
-    message: `You requested data for User ID: ${requestedUserId}`
+    success: true,
+    data: {
+      posts: posts
+    }
   });
 };
 
 
-// We export the function in an object so we can easily add more functions later.
+// =====================================
+// Controller: Get Post By ID
+// Handles: GET /api/v1/posts/:id
+// =====================================
+const getPostById = (req, res) => {
+  // Express automatically stores URL parameters in req.params
+  // Example: /posts/5 → req.params.id = 5
+  const postId = req.params.id;
+
+  // Normally we would search a database here using postId.
+  // For now, we just return the ID to confirm it works.
+  res.status(200).json({
+    success: true,
+    data: {
+      postId: postId
+    }
+  });
+};
+
+
+// =====================================
+// Exporting Controllers
+// This allows other files (like routes)
+// to use these functions.
+// =====================================
 module.exports = {
   getAllPosts,
-  getSingleUser,
+  getPostById,
 };
-
-
